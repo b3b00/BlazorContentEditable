@@ -15,6 +15,10 @@ function BlazorContentEditable(DivID, Instance, TextToDisplay) {
 
 }
 
+function SetValue(value) {
+    document.getElementById(DivID).innerHTML = value;
+}
+
 function SetHeight(DivID) {
 
     //reset to original height

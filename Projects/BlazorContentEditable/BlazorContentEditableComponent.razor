@@ -4,8 +4,18 @@
 
 @code {
 
+    private string _value;
+
     [Parameter]
-    public string Value { get; set; }
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            UpdateValue(value);
+            _value = value;
+        }
+    }
 
     [Parameter]
     public bool Enabled { get; set; } = true;   //default to true
@@ -82,6 +92,11 @@
         }
     }
 
+    protected async Task UpdateValue(string value)
+    {
+        await JSRuntime.InvokeAsync<string>("BlazorContentEditable", DivID, DotNetObjectReference.Create(this), value);
+    }
+    
     //receive input text from javascript and invoke callback to parent component
     [JSInvokable]
     public void GetUpdatedTextFromJavascript(string TextFromJavascript)
